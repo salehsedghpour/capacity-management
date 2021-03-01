@@ -7,6 +7,13 @@ from common import utils
 class ConfigManager(ConfigParser):
     """Configuration Manager"""
 
+    def _init_config_file(self):
+        """Initialize Base Config file"""
+        if not os.path.exists(self._configfile):
+            self.add_section("CLUSTER_SETUP")
+            self.set("CLUSTER_SETUP", "number_of_nodes", "3")
+            self.save()
+
     def _read_config(self):
         """Read Configuration file"""
         if os.path.exists(self._configfile):
