@@ -43,3 +43,11 @@ class ConfigManager(ConfigParser):
                 fd.close()
             except IOError:
                 return "Unable to write file on disk."
+
+
+class LibvirtXMLGenerator():
+    """Libvirt XML Generator"""
+
+    def __init__(self):
+        """Initialize"""
+        super(LibvirtXMLGenerator, self).__init__()
