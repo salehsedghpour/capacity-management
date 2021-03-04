@@ -1,4 +1,5 @@
 import os
+import xml.etree.ElementTree as ET
 
 from configparser import ConfigParser, NoOptionError, NoSectionError, MissingSectionHeaderError, ParsingError
 from common import utils
@@ -51,3 +52,12 @@ class LibvirtXMLGenerator():
     def __init__(self):
         """Initialize"""
         super(LibvirtXMLGenerator, self).__init__()
+
+    def _read_VM_config(self, name):
+        libvirt_dir = utils.libvirt_dir()
+        self.libvirt_path = "{}/{}.xml".format(libvirt_dir, name)
+        if os.path.exists(self._libvirt_path):
+            self.vm_xml = ET.parse(self._libvirt_path)
+        else:
+            self.vm_xml = None
+
