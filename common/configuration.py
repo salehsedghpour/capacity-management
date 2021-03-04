@@ -19,6 +19,8 @@ class ConfigManager(ConfigParser):
     def _init_config_file(self):
         """Initialize Base Config file"""
         if not os.path.exists(self._configfile):
+            self.add_section("GENERAL"),
+            self.set("GENERAL", "libvirt_directory", "/etc/libvirt/qemu/")
             self.add_section("CLUSTER_SETUP")
             self.set("CLUSTER_SETUP", "number_of_nodes", "3")
             self.save()
