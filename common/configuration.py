@@ -69,3 +69,14 @@ class LibvirtXMLGenerator():
             self.domain.set("type", domain_type)
         else:
             raise exceptions.InvalidDomainType
+
+    def set_domain_ID(self, domain_id):
+        """Set domain ID
+        :rtype: object
+        :param domain_id: 
+        """
+        try:
+            int_domain_id = int(domain_id)
+            self.domain.set("id", str(int_domain_id))
+        except ValueError:
+            raise exceptions.InvalidDomainID
