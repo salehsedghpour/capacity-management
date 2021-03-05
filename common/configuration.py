@@ -56,6 +56,7 @@ class LibvirtXMLGenerator():
         self.domain = ET.Element('domain')
         self.domain_name = ET.SubElement(self.domain, "name")
         self.domain_memory = ET.SubElement(self.domain, "name")
+        self.domain_vcpu = ET.SubElement(self.domain, "vcpu")
 
     def _read_VM_config(self, name):
         libvirt_dir = utils.libvirt_dir()
@@ -104,4 +105,14 @@ class LibvirtXMLGenerator():
             self.domain_memory.text = str(domain_memory)
         else:
             raise exceptions.InvalidMemoryUnit
+
+    def set_domain_vcpu(self, vcpu_number):
+        """Set the number of VCPUs of domain
+        :rtype: object
+        :param vcpu_number: 
+        """
+        try:
+            self.domain_vcpu.text = str(int(vcpu_number))
+        except ValueError:
+            raise ValueError("Value error on VCPU Number")
 
