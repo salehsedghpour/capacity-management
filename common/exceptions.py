@@ -4,3 +4,7 @@ class InvalidDomainType(Exception):
 
 class InvalidDomainID(Exception):
     pass
+
+
+class EmptyString(Exception):
+    pass

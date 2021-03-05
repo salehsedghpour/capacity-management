@@ -54,6 +54,7 @@ class LibvirtXMLGenerator():
         super(LibvirtXMLGenerator, self).__init__()
 
         self.domain = ET.Element('domain')
+        self.domain_name = ET.SubElement(self.domain, "name")
 
     def _read_VM_config(self, name):
         libvirt_dir = utils.libvirt_dir()
@@ -80,3 +81,14 @@ class LibvirtXMLGenerator():
             self.domain.set("id", str(int_domain_id))
         except ValueError:
             raise exceptions.InvalidDomainID
+
+    def set_domain_name(self, domain_name):
+        """Set domain Name
+        :rtype: object
+        :param domain_name:
+        """
+        if domain_name != "":
+            self.domain_name.text = domain_name
+        else:
+            raise exceptions.EmptyString
+
