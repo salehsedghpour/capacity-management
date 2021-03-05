@@ -12,3 +12,7 @@ class EmptyString(Exception):
 
 class InvalidMemoryUnit(Exception):
     pass
+
+
+class InvalidVCPUPlacement(Exception):
+    pass

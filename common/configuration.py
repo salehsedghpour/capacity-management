@@ -116,3 +116,18 @@ class LibvirtXMLGenerator():
         except ValueError:
             raise ValueError("Value error on VCPU Number")
 
+    #TODO Validation on CPU Set
+    def set_domain_vcpu_placement(self, vcpu_placement, cpuset=None):
+        """Set the placement of VCPUs
+        :rtype: object
+        :param vcpu_placement:
+        :param cpuset:
+        """
+        if vcpu_placement == "static":
+            self.domain_vcpu.set("placement", vcpu_placement)
+            self.domain_vcpu.set("cpuset", cpuset)
+        elif vcpu_placement == "auto":
+            self.domain_vcpu.set("placement", vcpu_placement)
+        else:
+            raise exceptions.InvalidVCPUPlacement
+
