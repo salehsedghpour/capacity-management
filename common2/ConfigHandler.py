@@ -39,5 +39,10 @@ class ConfigEditor(ConfigParser):
           </devices>
          </domain>""" 
         
-        dom = self.connection.defineXML(domxml)    
+        dom = self.connection.defineXML(domxml)  
+    def read_config(self,path_to_xml_config):
+        """Read Config File"""
+        with open(path_to_xml_config, "r") as f:           
+            xml = f.readlines()
+         
     
