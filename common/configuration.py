@@ -55,6 +55,7 @@ class LibvirtXMLGenerator():
 
         self.domain = ET.Element('domain')
         self.domain_name = ET.SubElement(self.domain, "name")
+        self.domain_memory = ET.SubElement(self.domain, "name")
 
     def _read_VM_config(self, name):
         libvirt_dir = utils.libvirt_dir()
@@ -91,4 +92,16 @@ class LibvirtXMLGenerator():
             self.domain_name.text = domain_name
         else:
             raise exceptions.EmptyString
+
+    def set_domain_memory(self, domain_memory, domain_memory_unit):
+        """Set domain Memory and its unit
+        :rtype: object
+        :param domain_memory:
+        :param domain_memory_unit:
+        """
+        if domain_memory_unit in ["b", "bytes", "KB", "K", "KiB", "MB", "M","MiB", "GB", "G","GiB"]:
+            self.domain_memory.set("unit", domain_memory_unit)
+            self.domain_memory.text = str(domain_memory)
+        else:
+            raise exceptions.InvalidMemoryUnit
 

@@ -8,3 +8,7 @@ class InvalidDomainID(Exception):
 
 class EmptyString(Exception):
     pass
+
+
+class InvalidMemoryUnit(Exception):
+    pass
