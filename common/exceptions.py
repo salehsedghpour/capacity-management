@@ -1,0 +1,2 @@
+class InvalidDomainType(Exception):
+    pass

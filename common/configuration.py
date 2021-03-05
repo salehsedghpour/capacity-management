@@ -2,7 +2,7 @@ import os
 import xml.etree.ElementTree as ET
 
 from configparser import ConfigParser, NoOptionError, NoSectionError, MissingSectionHeaderError, ParsingError
-from common import utils
+from common import utils, exceptions
 
 
 class ConfigManager(ConfigParser):
@@ -53,6 +53,8 @@ class LibvirtXMLGenerator():
         """Initialize"""
         super(LibvirtXMLGenerator, self).__init__()
 
+        self.domain = ET.Element('domain')
+
     def _read_VM_config(self, name):
         libvirt_dir = utils.libvirt_dir()
         self.libvirt_path = "{}/{}.xml".format(libvirt_dir, name)
@@ -61,3 +63,9 @@ class LibvirtXMLGenerator():
         else:
             self.vm_xml = None
 
+    def set_domain_type(self, domain_type):
+        """Set domain type"""
+        if domain_type in ["kvm"]:
+            self.domain.set("type", domain_type)
+        else:
+            raise exceptions.InvalidDomainType
