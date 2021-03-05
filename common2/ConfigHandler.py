@@ -21,5 +21,23 @@ class ConfigEditor(ConfigParser):
         return self.connection
         #conn.close()
         
+    def make_config(self, name, disk_path, ram, vcpu, image):      
+        """ create a domain"""
+        domxml = """<domain type='kvm'>
+          <name>"""+name+"""</name>
+          <memory>"""+ram+"""</memory>
+          <vcpu>"""+vcpu+"""</vcpu>
+          <os>
+            <type arch='x86_64' machine='pc-0.13'>hvm</type>
+          </os>
+          <devices>
+            <disk type='file' device='disk'>
+              <driver name='qemu' type='qed'/>
+              <source file="""+image+""" />
+              <target dev='vda' bus='virtio'/>
+            </disk>
+          </devices>
+         </domain>""" 
         
+        dom = self.connection.defineXML(domxml)    
     
