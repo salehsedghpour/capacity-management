@@ -41,4 +41,10 @@ class ConfigEditor(ConfigParser):
         
         dom = self.connection.defineXML(domxml)
         return dom 
+
+    def read_config(self,path_to_xml_config):
+        """Read Config File"""
+        with open(path_to_xml_config, "r") as f:           
+            xml = f.readlines()
+        return xml
     
