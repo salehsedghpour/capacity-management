@@ -1,5 +1,5 @@
 import os, sys
-from common.configuration import ConfigManager
+from common import configuration
 
 
 def app_dir():
@@ -10,7 +10,6 @@ def app_dir():
 
 def libvirt_dir():
     """Libvirt VM directory"""
-    manager = ConfigManager()
+    manager = configuration.ConfigManager()
     libvirt_dir = manager.get("GENERAL", "libvirt_directory")
     return libvirt_dir
-
