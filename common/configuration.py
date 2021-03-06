@@ -5,6 +5,7 @@ from configparser import ConfigParser, NoOptionError, NoSectionError, MissingSec
 from common import utils, exceptions
 
 
+
 class ConfigManager(ConfigParser):
     """Configuration Manager"""
 
@@ -130,4 +131,5 @@ class LibvirtXMLGenerator():
             self.domain_vcpu.set("placement", vcpu_placement)
         else:
             raise exceptions.InvalidVCPUPlacement
+
 

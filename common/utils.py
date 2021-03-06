@@ -13,3 +13,4 @@ def libvirt_dir():
     manager = ConfigManager()
     libvirt_dir = manager.get("GENERAL", "libvirt_directory")
     return libvirt_dir
+
