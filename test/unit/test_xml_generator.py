@@ -36,3 +36,7 @@ class TestLibvirtXMLGenerator(object):
         LibvirtXML.set_domain_memory(512, "KiB")
         assert "512" == LibvirtXML.domain_memory.text
         assert "KiB" == LibvirtXML.domain_memory.get("unit")
+
+    def test_set_domain_memory_with_wrong_unit(self):
+        with pytest.raises(exceptions.InvalidMemoryUnit):
+            LibvirtXML.set_domain_memory(512, "test")
