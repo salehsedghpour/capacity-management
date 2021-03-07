@@ -43,8 +43,7 @@ class ConfigManager(ConfigParser):
             except IOError:
                 return "Unable to write file on disk."
 
-    class LibvirtXMLGenerator():
-        """Libvirt XML Generator"""            
+               
 
     def set_vm_disk(self, type, file):
         """
