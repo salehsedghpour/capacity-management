@@ -9,7 +9,7 @@ def app_dir():
 
 
 def libvirt_dir():
-    """Libvirt VM directory"""
+    """ Libvirt VM directory """
     manager = configuration.ConfigManager()
     libvirt_dir = manager.get("GENERAL", "libvirt_directory")
     return libvirt_dir

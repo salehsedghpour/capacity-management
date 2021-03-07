@@ -59,6 +59,7 @@ class LibvirtXMLGenerator():
         self.domain_name = ET.SubElement(self.domain, "name")
         self.domain_memory = ET.SubElement(self.domain, "name")
         self.domain_vcpu = ET.SubElement(self.domain, "vcpu")
+        self.domain_devices = ET.SubElement(self.domain, "devices")
 
     def _read_VM_config(self, name):
         libvirt_dir = utils.libvirt_dir()
