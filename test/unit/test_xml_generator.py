@@ -73,4 +73,10 @@ class TestLibvirtXMLGenerator(object):
 
     def test_set_graphics_with_wrong_unit(self):
         with pytest.raises(exceptions.InvalidAutoPort):
-            LibvirtXML.set_graphics("sdl",'-1', "test")                 
+            LibvirtXML.set_graphics("sdl",'-1', "test")  
+
+
+    def test_set_domain_devices_disk_type_device(self):
+        LibvirtXML.set_domain_devices_disk_type_device("file", "floppy")
+        assert "file" == LibvirtXML.domain_devices_disk.get("type")
+        assert "floppy" == LibvirtXML.domain_devices_disk.get("device")                         
