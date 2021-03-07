@@ -43,19 +43,43 @@ class ConfigManager(ConfigParser):
             except IOError:
                 return "Unable to write file on disk."
 
-    def add_vm_disk(self, type, file, device):
-            """
-        Options:
+    class LibvirtXMLGenerator():
+        """Libvirt XML Generator"""            
+
+    def set_vm_disk(self, type, file):
+        """
+        
             file: absolute path of disk image file
             type: image file formats
-        """
-        #devices = self.domain.find('devices')
-        disk = ET.SubElement(device, 'disk', {'type': 'file', 'device': 'disk'})
-
-
-        ET.SubElement(disk, 'source', {'file': file})        
+          """
+        if file is  '':
+                return False  
+        disk = ET.SubElement('device', 'disk', {'type': 'file', 'device': 'disk'})
+        if type is  '':
+             type = 'raw'
+        
+        ET.SubElement(disk, 'source', {'file': file})  
 
         ET.SubElement(disk, 'driver', {'name': 'qemu', 'type': type})
+        ET.SubElement(
+            disk, 'target', {'dev': 'vdc' , 'bus': 'virtio'})
+            
+
+    def set_graphics(self, type, port, autoport):
+        # graphic device
+        ET.SubElement('device', 'graphics', {
+                      'type': type, 'port': port, 'autoport': autoport}) 
+
+
+    def set_os_varian(self, arch,  dev ):
+        """ set os type     """
+        os = ET.SubElement(self.domain, 'os')
+        type = ET.SubElement(
+            os, 'type', {'arch': arch})
+        type.text = 'hvm'
+        ET.SubElement(os, 'boot', {'dev': dev})                        
+
+        
 
         
 
