@@ -63,6 +63,14 @@ class TestLibvirtXMLGenerator(object):
 
     def test_set_graphics(self):
         LibvirtXML.set_graphics("sdl",'-1', "yes")
-       # assert "sdl" == LibvirtXML.domain_devices_graphics.get("graphics_type")
-        #assert "-1" == LibvirtXML.domain_devices_graphics.get("port")  
-        assert "yes" == LibvirtXML.domain_devices_graphics.get("autoport")         
+        assert "sdl" == LibvirtXML.domain_devices_graphics.get("graphics_type")
+        assert "-1" == LibvirtXML.domain_devices_graphics.get("port")  
+        assert "yes" == LibvirtXML.domain_devices_graphics.get("autoport")   
+
+    def test_set_graphics_with_wrong_unit(self):
+        with pytest.raises(exceptions.InvalidGraphicsType):
+            LibvirtXML.set_graphics("test",'-1', "yes") 
+
+    def test_set_graphics_with_wrong_unit(self):
+        with pytest.raises(exceptions.InvalidAutoPort):
+            LibvirtXML.set_graphics("sdl",'-1', "test")                 
