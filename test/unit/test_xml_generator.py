@@ -48,3 +48,7 @@ class TestLibvirtXMLGenerator(object):
     def test_set_domain_vcpu_with_non_integers(self):
         with pytest.raises(ValueError):
             LibvirtXML.set_domain_vcpu("test")
+
+    def test_set_domain_vcpu_placement(self):
+        LibvirtXML.set_domain_vcpu_placement("auto")
+        assert "auto" == LibvirtXML.domain_vcpu.get("placement")
