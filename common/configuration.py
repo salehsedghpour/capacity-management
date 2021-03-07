@@ -63,7 +63,7 @@ class ConfigManager(ConfigParser):
         ET.SubElement(disk, 'driver', {'name': 'qemu', 'type': type})
         ET.SubElement(
             disk, 'target', {'dev': 'vdc' , 'bus': 'virtio'})
-            
+
 
     def set_graphics(self, type, port, autoport):
         # graphic device
@@ -71,7 +71,7 @@ class ConfigManager(ConfigParser):
                       'type': type, 'port': port, 'autoport': autoport}) 
 
 
-    def set_os_varian(self, arch,  dev ):
+    def set_os_variant(self, arch,  dev ):
         """ set os type     """
         os = ET.SubElement(self.domain, 'os')
         type = ET.SubElement(
