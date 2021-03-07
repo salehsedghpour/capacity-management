@@ -154,6 +154,18 @@ class LibvirtXMLGenerator():
             disk, 'target', {'dev': 'vdc' , 'bus': 'virtio'})
 
 
+    def set_vm_disk(self, type, file, device):
+        """
+        
+            file: absolute path of disk image file
+            type: image file formats
+         """
+        #devices = self.domain.find('devices')
+        disk = ET.SubElement(device, 'disk', {'type': 'file', 'device': 'disk'})
+        ET.SubElement(disk, 'source', {'file': file})        
+        ET.SubElement(disk, 'driver', {'name': 'qemu', 'type': type})        
+
+
     def set_graphics(self, type, port, autoport):
         # graphic device
         ET.SubElement('device', 'graphics', {

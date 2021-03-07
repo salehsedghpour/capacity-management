@@ -16,3 +16,9 @@ class InvalidMemoryUnit(Exception):
 
 class InvalidVCPUPlacement(Exception):
     pass
+
+class InvalidDiskType(Exception):
+       pass
+    
+class InvalidDiskDevice(Exception):
+   pass
