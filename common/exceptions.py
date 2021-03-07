@@ -21,4 +21,4 @@ class InvalidDiskType(Exception):
        pass
     
 class InvalidDiskDevice(Exception):
-   pass
+       pass

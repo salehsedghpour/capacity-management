@@ -135,35 +135,46 @@ class LibvirtXMLGenerator():
             raise exceptions.InvalidVCPUPlacement
 
 
-    def set_vm_disk(self, type, file):
-        """
+    # def set_vm_disk(self, type, file):
+    #     """
         
-            file: absolute path of disk image file
-            type: image file formats
-          """
-        if file is  '':
-                return False  
-        disk = ET.SubElement('device', 'disk', {'type': 'file', 'device': 'disk'})
-        if type is  '':
-             type = 'raw'
+    #         file: absolute path of disk image file
+    #         type: image file formats
+    #       """
+    #     if file is  '':
+    #             return False  
+    #     disk = ET.SubElement('device', 'disk', {'type': 'file', 'device': 'disk'})
+    #     if type is  '':
+    #          type = 'raw'
         
-        ET.SubElement(disk, 'source', {'file': file})  
+    #     ET.SubElement(disk, 'source', {'file': file})  
 
-        ET.SubElement(disk, 'driver', {'name': 'qemu', 'type': type})
-        ET.SubElement(
-            disk, 'target', {'dev': 'vdc' , 'bus': 'virtio'})
+    #     ET.SubElement(disk, 'driver', {'name': 'qemu', 'type': type})
+    #     ET.SubElement(
+    #         disk, 'target', {'dev': 'vdc' , 'bus': 'virtio'})
 
 
-    def set_vm_disk(self, type, file, device):
-        """
+    # def set_vm_disk(self, type, file, device):
+    #     """
         
-            file: absolute path of disk image file
-            type: image file formats
-         """
-        #devices = self.domain.find('devices')
-        disk = ET.SubElement(device, 'disk', {'type': 'file', 'device': 'disk'})
-        ET.SubElement(disk, 'source', {'file': file})        
-        ET.SubElement(disk, 'driver', {'name': 'qemu', 'type': type})        
+    #         file: absolute path of disk image file
+    #         type: image file formats
+    #      """
+    #     #devices = self.domain.find('devices')
+    #     disk = ET.SubElement(device, 'disk', {'type': 'file', 'device': 'disk'})
+    #     ET.SubElement(disk, 'source', {'file': file})        
+    #     ET.SubElement(disk, 'driver', {'name': 'qemu', 'type': type}) 
+    
+    def set_domain_devices_disk_type_device(self, disk_type, disk_device):
+        """ Set the disk type and disk device of a device in a domain"""
+        if disk_type in ["file", "block", "dir", "network", "volume", "nvme", "vhostuser"]:
+            if disk_device in ["floppy", "disk", "cdrom", "lun"]:
+                self.domain_devices_disk.set("type", disk_type)
+                self.domain_devices_disk.set("device", disk_device)
+            else:
+                raise exceptions.InvalidDiskDevice
+        else:
+            raise exceptions.InvalidDiskType       
 
 
     def set_graphics(self, type, port, autoport):
