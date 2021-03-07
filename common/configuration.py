@@ -164,7 +164,7 @@ class LibvirtXMLGenerator():
     #     disk = ET.SubElement(device, 'disk', {'type': 'file', 'device': 'disk'})
     #     ET.SubElement(disk, 'source', {'file': file})        
     #     ET.SubElement(disk, 'driver', {'name': 'qemu', 'type': type}) 
-    
+
     def set_domain_devices_disk_type_device(self, disk_type, disk_device):
         """ Set the disk type and disk device of a device in a domain"""
         if disk_type in ["file", "block", "dir", "network", "volume", "nvme", "vhostuser"]:
@@ -177,10 +177,16 @@ class LibvirtXMLGenerator():
             raise exceptions.InvalidDiskType       
 
 
-    def set_graphics(self, type, port, autoport):
-        # graphic device
-        ET.SubElement('device', 'graphics', {
-                      'type': type, 'port': port, 'autoport': autoport}) 
+    def set_graphics(self, graphics_type, port, autoport):
+        """Set Graphic Device"""
+        if graphics_type in ['sdl',' vnc', 'spice', 'rdp', ' desktop',' egl-headless']:
+            if autoport in ['yes', 'no']:
+                ET.SubElement('device', 'graphics', {
+                      'type': graphics_type, 'port': port, 'autoport': autoport})
+            else:
+                raise exceptions.InvalidAutoPort
+        else:   
+            raise exceptions.InvalidGraphicsType            
 
 
     def set_os_variant(self, arch,  dev ):

@@ -18,7 +18,13 @@ class InvalidVCPUPlacement(Exception):
     pass
 
 class InvalidDiskType(Exception):
-       pass
+    pass
     
 class InvalidDiskDevice(Exception):
-       pass
+    pass
+
+class InvalidAutoPort(Exception):
+    pass
+
+class InvalidGraphicsType(Exception):
+    pass
