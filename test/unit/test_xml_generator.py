@@ -62,7 +62,7 @@ class TestLibvirtXMLGenerator(object):
             LibvirtXML.set_domain_vcpu_placement("test")
 
     def test_set_graphics(self):
-        LibvirtXML.set_graphics('sdl',-1, "yes")
-        assert "sdl" == LibvirtXML.set_graphics.get('graphics_type')
-        assert "-1" == LibvirtXML.set_graphics.get("port")  
-        assert "yes" == LibvirtXML.set_graphics.get("autoport")         
+        LibvirtXML.set_graphics("sdl",'-1', "yes")
+        assert "sdl" == LibvirtXML.domain_devices_graphics.get("graphics_type")
+        assert "-1" == LibvirtXML.domain_devices_graphics.get("port")  
+        assert "yes" == LibvirtXML.domain_devices_graphics.get("autoport")         

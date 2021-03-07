@@ -185,7 +185,7 @@ class LibvirtXMLGenerator():
 
         if graphics_type in ['sdl',' vnc', 'spice', 'rdp', ' desktop',' egl-headless']:
             if autoport in ['yes', 'no']:
-                self.domain_devices_graphics.set("type", graphics_type)
+                self.domain_devices_graphics.set("graphics_type", graphics_type)
                 self.domain_devices_graphics.set("port", port)
                 self.domain_devices_graphics.set("autoport", autoport)                
             else:
@@ -194,14 +194,14 @@ class LibvirtXMLGenerator():
             raise exceptions.InvalidGraphicsType            
 
 
-    # def set_os_variant(self, arch,  dev ):
-    #     """ set os type     """
-    #      self.domain_os.set('arch',arch)
-    #      self.domain
-    #     type = ET.SubElement(
-    #         os, 'type', {'arch': arch})
-    #     type.text = 'hvm'
-    #     ET.SubElement(os, 'boot', {'dev': dev})                        
+    def set_os_variant(self, arch,  dev ):
+        """ set os type     """
+        self.domain_os.set('arch',arch)
+        self.domain_os.set()
+        type = ET.SubElement(
+            os, 'type', {'arch': arch})
+        type.text = 'hvm'
+        ET.SubElement(os, 'boot', {'dev': dev})                        
 
         
 
