@@ -31,3 +31,8 @@ class TestLibvirtXMLGenerator(object):
     def test_set_empty_domain_name(self):
         with pytest.raises(exceptions.EmptyString):
             LibvirtXML.set_domain_name("")
+
+    def test_set_domain_memory(self):
+        LibvirtXML.set_domain_memory(512, "KiB")
+        assert "512" == LibvirtXML.domain_memory.text
+        assert "KiB" == LibvirtXML.domain_memory.get("unit")
