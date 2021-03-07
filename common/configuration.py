@@ -1,4 +1,5 @@
 import os
+import xml.etree.ElementTree as ET
 
 from configparser import ConfigParser, NoOptionError, NoSectionError, MissingSectionHeaderError, ParsingError
 from common import utils
@@ -41,3 +42,21 @@ class ConfigManager(ConfigParser):
                 fd.close()
             except IOError:
                 return "Unable to write file on disk."
+
+    def add_vm_disk(self, type, file, device):
+            """
+        Options:
+            file: absolute path of disk image file
+            type: image file formats
+        """
+        #devices = self.domain.find('devices')
+        disk = ET.SubElement(device, 'disk', {'type': 'file', 'device': 'disk'})
+
+
+        ET.SubElement(disk, 'source', {'file': file})        
+
+        ET.SubElement(disk, 'driver', {'name': 'qemu', 'type': type})
+
+        
+
+       
