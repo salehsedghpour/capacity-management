@@ -44,3 +44,7 @@ class TestLibvirtXMLGenerator(object):
     def test_set_domain_vcpu(self):
         LibvirtXML.set_domain_vcpu(4)
         assert "4" == LibvirtXML.domain_vcpu.text
+
+    def test_set_domain_vcpu_with_non_integers(self):
+        with pytest.raises(ValueError):
+            LibvirtXML.set_domain_vcpu("test")
