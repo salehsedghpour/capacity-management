@@ -20,3 +20,7 @@ class TestLibvirtXMLGenerator(object):
         LibvirtXML.set_domain_ID("2")
         assert "2" == LibvirtXML.domain.get("id")
 
+    def test_set_domain_id_error(self):
+        with pytest.raises(exceptions.InvalidDomainID):
+            LibvirtXML.set_domain_ID("test")
+
