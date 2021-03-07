@@ -23,6 +23,7 @@ class ConfigManager(ConfigParser):
         if not os.path.exists(self._configfile):
             self.add_section("GENERAL"),
             self.set("GENERAL", "libvirt_directory", "/etc/libvirt/qemu/")
+            self.set("GENERAL", "libvirt_images_directory", "/var/lib/libvirt/images/")
             self.add_section("CLUSTER_SETUP")
             self.set("CLUSTER_SETUP", "number_of_nodes", "3")
             self.save()
@@ -46,48 +47,6 @@ class ConfigManager(ConfigParser):
             except IOError:
                 return "Unable to write file on disk."
 
-<<<<<<< HEAD
-               
-
-    def set_vm_disk(self, type, file):
-        """
-        
-            file: absolute path of disk image file
-            type: image file formats
-          """
-        if file is  '':
-                return False  
-        disk = ET.SubElement('device', 'disk', {'type': 'file', 'device': 'disk'})
-        if type is  '':
-             type = 'raw'
-        
-        ET.SubElement(disk, 'source', {'file': file})  
-
-        ET.SubElement(disk, 'driver', {'name': 'qemu', 'type': type})
-        ET.SubElement(
-            disk, 'target', {'dev': 'vdc' , 'bus': 'virtio'})
-
-
-    def set_graphics(self, type, port, autoport):
-        # graphic device
-        ET.SubElement('device', 'graphics', {
-                      'type': type, 'port': port, 'autoport': autoport}) 
-
-
-    def set_os_variant(self, arch,  dev ):
-        """ set os type     """
-        os = ET.SubElement(self.domain, 'os')
-        type = ET.SubElement(
-            os, 'type', {'arch': arch})
-        type.text = 'hvm'
-        ET.SubElement(os, 'boot', {'dev': dev})                        
-
-        
-
-        
-
-       
-=======
 
 class LibvirtXMLGenerator():
     """Libvirt XML Generator"""
@@ -175,4 +134,41 @@ class LibvirtXMLGenerator():
             raise exceptions.InvalidVCPUPlacement
 
 
->>>>>>> main
+    def set_vm_disk(self, type, file):
+        """
+        
+            file: absolute path of disk image file
+            type: image file formats
+          """
+        if file is  '':
+                return False  
+        disk = ET.SubElement('device', 'disk', {'type': 'file', 'device': 'disk'})
+        if type is  '':
+             type = 'raw'
+        
+        ET.SubElement(disk, 'source', {'file': file})  
+
+        ET.SubElement(disk, 'driver', {'name': 'qemu', 'type': type})
+        ET.SubElement(
+            disk, 'target', {'dev': 'vdc' , 'bus': 'virtio'})
+
+
+    def set_graphics(self, type, port, autoport):
+        # graphic device
+        ET.SubElement('device', 'graphics', {
+                      'type': type, 'port': port, 'autoport': autoport}) 
+
+
+    def set_os_variant(self, arch,  dev ):
+        """ set os type     """
+        os = ET.SubElement(self.domain, 'os')
+        type = ET.SubElement(
+            os, 'type', {'arch': arch})
+        type.text = 'hvm'
+        ET.SubElement(os, 'boot', {'dev': dev})                        
+
+        
+
+            
+
+
