@@ -60,3 +60,9 @@ class TestLibvirtXMLGenerator(object):
     def test_set_domain_vcpu_placement_with_wrnong_placement(self):
         with pytest.raises(exceptions.InvalidVCPUPlacement):
             LibvirtXML.set_domain_vcpu_placement("test")
+
+    def test_set_graphics(self):
+        LibvirtXML.set_graphics('sdl',-1, "yes")
+        assert "sdl" == LibvirtXML.set_graphics.get('graphics_type')
+        assert "-1" == LibvirtXML.set_graphics.get("port")  
+        assert "yes" == LibvirtXML.set_graphics.get("autoport")         

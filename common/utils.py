@@ -18,5 +18,5 @@ def libvirt_images_dir():
     """ Libvirt Images directory  """
     manager = configuration.ConfigManager()
     libvirt_images_dir = manager.get("GENERAL", "libvirt_images_directory")
-    return libvirt_dir
+    return libvirt_images_dir
 

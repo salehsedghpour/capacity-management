@@ -60,6 +60,9 @@ class LibvirtXMLGenerator():
         self.domain_memory = ET.SubElement(self.domain, "name")
         self.domain_vcpu = ET.SubElement(self.domain, "vcpu")
         self.domain_devices = ET.SubElement(self.domain, "devices")
+        self.domain_devices_disk = ET.SubElement(self.domain_devices, "disk")
+        self.domain_devices_graphics =  ET.SubElement(self.domain_devices, 'graphics')
+        self.domain_os = ET.SubElement(self.domain, 'os')
 
     def _read_VM_config(self, name):
         libvirt_dir = utils.libvirt_dir()
@@ -179,23 +182,26 @@ class LibvirtXMLGenerator():
 
     def set_graphics(self, graphics_type, port, autoport):
         """Set Graphic Device"""
+
         if graphics_type in ['sdl',' vnc', 'spice', 'rdp', ' desktop',' egl-headless']:
             if autoport in ['yes', 'no']:
-                ET.SubElement('device', 'graphics', {
-                      'type': graphics_type, 'port': port, 'autoport': autoport})
+                self.domain_devices_graphics.set("type", graphics_type)
+                self.domain_devices_graphics.set("port", port)
+                self.domain_devices_graphics.set("autoport", autoport)                
             else:
                 raise exceptions.InvalidAutoPort
         else:   
             raise exceptions.InvalidGraphicsType            
 
 
-    def set_os_variant(self, arch,  dev ):
-        """ set os type     """
-        os = ET.SubElement(self.domain, 'os')
-        type = ET.SubElement(
-            os, 'type', {'arch': arch})
-        type.text = 'hvm'
-        ET.SubElement(os, 'boot', {'dev': dev})                        
+    # def set_os_variant(self, arch,  dev ):
+    #     """ set os type     """
+    #      self.domain_os.set('arch',arch)
+    #      self.domain
+    #     type = ET.SubElement(
+    #         os, 'type', {'arch': arch})
+    #     type.text = 'hvm'
+    #     ET.SubElement(os, 'boot', {'dev': dev})                        
 
         
 
