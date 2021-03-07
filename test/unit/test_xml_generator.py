@@ -79,4 +79,8 @@ class TestLibvirtXMLGenerator(object):
     def test_set_domain_devices_disk_type_device(self):
         LibvirtXML.set_domain_devices_disk_type_device("file", "floppy")
         assert "file" == LibvirtXML.domain_devices_disk.get("type")
-        assert "floppy" == LibvirtXML.domain_devices_disk.get("device")                         
+        assert "floppy" == LibvirtXML.domain_devices_disk.get("device") 
+
+    def test_set_domain_devices_disk_type_device_with_wrong_unit(self):
+        with pytest.raises(exceptions.InvalidDiskDevice):
+            LibvirtXML.set_domain_devices_disk_type_device("file", "test")                             
