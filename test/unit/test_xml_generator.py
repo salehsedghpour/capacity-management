@@ -27,3 +27,7 @@ class TestLibvirtXMLGenerator(object):
     def test_set_domain_name(self):
         LibvirtXML.set_domain_name("test")
         assert "test" == LibvirtXML.domain_name.text
+
+    def test_set_empty_domain_name(self):
+        with pytest.raises(exceptions.EmptyString):
+            LibvirtXML.set_domain_name("")
