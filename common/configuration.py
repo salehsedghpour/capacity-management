@@ -23,6 +23,7 @@ class ConfigManager(ConfigParser):
         if not os.path.exists(self._configfile):
             self.add_section("GENERAL"),
             self.set("GENERAL", "libvirt_directory", "/etc/libvirt/qemu/")
+            self.set("GENERAL", "libvirt_images_directory", "/var/lib/libvirt/images/")
             self.add_section("CLUSTER_SETUP")
             self.set("CLUSTER_SETUP", "number_of_nodes", "3")
             self.save()
@@ -58,6 +59,13 @@ class LibvirtXMLGenerator():
         self.domain_name = ET.SubElement(self.domain, "name")
         self.domain_memory = ET.SubElement(self.domain, "name")
         self.domain_vcpu = ET.SubElement(self.domain, "vcpu")
+        self.domain_devices = ET.SubElement(self.domain, "devices")
+        self.domain_devices_disk = ET.SubElement(self.domain_devices, "disk")
+        self.domain_devices_graphics =  ET.SubElement(self.domain_devices, 'graphics')
+        self.domain_os = ET.SubElement(self.domain, 'os')
+        self.domain_os_boot = ET.SubElement(self.domain_os, 'boot')
+        self.domain_os_type = ET.SubElement(self.domain_os, 'type')
+        
 
     def _read_VM_config(self, name):
         libvirt_dir = utils.libvirt_dir()
@@ -131,5 +139,50 @@ class LibvirtXMLGenerator():
             self.domain_vcpu.set("placement", vcpu_placement)
         else:
             raise exceptions.InvalidVCPUPlacement
+
+    def set_domain_devices_disk_type_device(self, disk_type, disk_device):
+        """ Set the disk type and disk device of a device in a domain"""
+        if disk_type in ["file", "block", "dir", "network", "volume", "nvme", "vhostuser"]:
+            if disk_device in ["floppy", "disk", "cdrom", "lun"]:
+                self.domain_devices_disk.set("type", disk_type)
+                self.domain_devices_disk.set("device", disk_device)
+            else:
+                raise exceptions.InvalidDiskDevice
+        else:
+            raise exceptions.InvalidDiskType       
+
+
+    def set_graphics(self, graphics_type, port, autoport):
+        """Set Graphic Device"""
+
+        if graphics_type in ['sdl',' vnc', 'spice', 'rdp', ' desktop',' egl-headless']:
+            if autoport in ['yes', 'no']:
+                self.domain_devices_graphics.set("graphics_type", graphics_type)
+                self.domain_devices_graphics.set("port", port)
+                self.domain_devices_graphics.set("autoport", autoport)                
+            else:
+                raise exceptions.InvalidAutoPort
+        else:   
+            raise exceptions.InvalidGraphicsType  
+    
+
+
+    def set_os_variant(self, arch, dev):
+        """ set os type    """
+        if arch != "":
+            self.domain_os_type.set('arch',arch)
+                   
+        self.domain_os_type.text = 'hvm'
+        
+        if dev in ["fd", "hd", "cdrom", "network"]:
+           self.domain_os_boot.set('dev', dev)
+        else:
+            raise exceptions.InvalidBootDevType
+                              
+
+        
+
+ 
+            
 
 

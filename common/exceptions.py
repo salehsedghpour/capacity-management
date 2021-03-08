@@ -16,3 +16,18 @@ class InvalidMemoryUnit(Exception):
 
 class InvalidVCPUPlacement(Exception):
     pass
+
+class InvalidDiskType(Exception):
+    pass
+    
+class InvalidDiskDevice(Exception):
+    pass
+
+class InvalidAutoPort(Exception):
+    pass
+
+class InvalidGraphicsType(Exception):
+    pass
+
+class InvalidBootDevType(Exception):
+    pass

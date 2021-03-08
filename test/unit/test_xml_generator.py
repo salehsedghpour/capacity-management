@@ -60,3 +60,40 @@ class TestLibvirtXMLGenerator(object):
     def test_set_domain_vcpu_placement_with_wrnong_placement(self):
         with pytest.raises(exceptions.InvalidVCPUPlacement):
             LibvirtXML.set_domain_vcpu_placement("test")
+
+    def test_set_graphics(self):
+        LibvirtXML.set_graphics("sdl",'-1', "yes")
+        assert "sdl" == LibvirtXML.domain_devices_graphics.get("graphics_type")
+        assert "-1" == LibvirtXML.domain_devices_graphics.get("port")  
+        assert "yes" == LibvirtXML.domain_devices_graphics.get("autoport")   
+
+    def test_set_graphics_with_wrong_unit(self):
+        with pytest.raises(exceptions.InvalidGraphicsType):
+            LibvirtXML.set_graphics("test",'-1', "yes") 
+
+    def test_set_graphics_with_wrong_unit(self):
+        with pytest.raises(exceptions.InvalidAutoPort):
+            LibvirtXML.set_graphics("sdl",'-1', "test")  
+
+
+    def test_set_domain_devices_disk_type_device(self):
+        LibvirtXML.set_domain_devices_disk_type_device("file", "floppy")
+        assert "file" == LibvirtXML.domain_devices_disk.get("type")
+        assert "floppy" == LibvirtXML.domain_devices_disk.get("device") 
+
+    def test_set_domain_devices_disk_type_device_with_wrong_unit(self):
+        with pytest.raises(exceptions.InvalidDiskDevice):
+            LibvirtXML.set_domain_devices_disk_type_device("file", "test") 
+
+    def test_set_domain_devices_disk_type_device_with_wrong_unit(self):
+        with pytest.raises(exceptions.InvalidDiskType):
+            LibvirtXML.set_domain_devices_disk_type_device("test", "floppt") 
+
+    def test_set_os_variant(self):
+        LibvirtXML.set_os_variant('x86_64', "network")
+        assert "x86_64" == LibvirtXML.domain_os_type.get("arch")
+        assert "network" == LibvirtXML.domain_os_boot.get("dev") 
+
+    def test_set_os_variant_with_wrong_unit(self):
+        with pytest.raises(exceptions.InvalidBootDevType):
+            LibvirtXML.set_os_variant("x86_64", "test")              
