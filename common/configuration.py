@@ -63,6 +63,9 @@ class LibvirtXMLGenerator():
         self.domain_devices_disk = ET.SubElement(self.domain_devices, "disk")
         self.domain_devices_graphics =  ET.SubElement(self.domain_devices, 'graphics')
         self.domain_os = ET.SubElement(self.domain, 'os')
+        self.domain_os_boot = ET.SubElement(self.domain_os, 'boot')
+        self.domain_os_type = ET.SubElement(self.domain_os, 'type')
+        
 
     def _read_VM_config(self, name):
         libvirt_dir = utils.libvirt_dir()
@@ -137,37 +140,6 @@ class LibvirtXMLGenerator():
         else:
             raise exceptions.InvalidVCPUPlacement
 
-
-    # def set_vm_disk(self, type, file):
-    #     """
-        
-    #         file: absolute path of disk image file
-    #         type: image file formats
-    #       """
-    #     if file is  '':
-    #             return False  
-    #     disk = ET.SubElement('device', 'disk', {'type': 'file', 'device': 'disk'})
-    #     if type is  '':
-    #          type = 'raw'
-        
-    #     ET.SubElement(disk, 'source', {'file': file})  
-
-    #     ET.SubElement(disk, 'driver', {'name': 'qemu', 'type': type})
-    #     ET.SubElement(
-    #         disk, 'target', {'dev': 'vdc' , 'bus': 'virtio'})
-
-
-    # def set_vm_disk(self, type, file, device):
-    #     """
-        
-    #         file: absolute path of disk image file
-    #         type: image file formats
-    #      """
-    #     #devices = self.domain.find('devices')
-    #     disk = ET.SubElement(device, 'disk', {'type': 'file', 'device': 'disk'})
-    #     ET.SubElement(disk, 'source', {'file': file})        
-    #     ET.SubElement(disk, 'driver', {'name': 'qemu', 'type': type}) 
-
     def set_domain_devices_disk_type_device(self, disk_type, disk_device):
         """ Set the disk type and disk device of a device in a domain"""
         if disk_type in ["file", "block", "dir", "network", "volume", "nvme", "vhostuser"]:
@@ -191,20 +163,26 @@ class LibvirtXMLGenerator():
             else:
                 raise exceptions.InvalidAutoPort
         else:   
-            raise exceptions.InvalidGraphicsType            
+            raise exceptions.InvalidGraphicsType  
+    
 
 
-    def set_os_variant(self, arch,  dev ):
-        """ set os type     """
-        self.domain_os.set('arch',arch)
-        self.domain_os.set()
-        type = ET.SubElement(
-            os, 'type', {'arch': arch})
-        type.text = 'hvm'
-        ET.SubElement(os, 'boot', {'dev': dev})                        
+    def set_os_variant(self, arch, type,  dev ):
+        """ set os type    """
+        if arch != "":
+            self.domain_os_type.set('arch',arch)
+                   
+        self.domain_os_type.text = 'hvm'
+        
+        if dev in ["fd", "hd", "cdrom", "network"]:
+           self.domain_os_boot.set('dev', dev)
+        else:
+            raise exceptions.InvalidBootDev
+                              
 
         
 
+ 
             
 
 

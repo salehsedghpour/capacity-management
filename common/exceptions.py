@@ -28,3 +28,5 @@ class InvalidAutoPort(Exception):
 
 class InvalidGraphicsType(Exception):
     pass
+class InvalidBootDev(Exception):
+    pass
