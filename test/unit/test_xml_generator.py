@@ -83,7 +83,13 @@ class TestLibvirtXMLGenerator(object):
 
     def test_set_domain_devices_disk_type_device_with_wrong_unit(self):
         with pytest.raises(exceptions.InvalidDiskDevice):
-            LibvirtXML.set_domain_devices_disk_type_device("file", "test")  
+            LibvirtXML.set_domain_devices_disk_type_device("file", "test") 
+
     def test_set_domain_devices_disk_type_device_with_wrong_unit(self):
         with pytest.raises(exceptions.InvalidDiskType):
-            LibvirtXML.set_domain_devices_disk_type_device("test", "floppt")                                    
+            LibvirtXML.set_domain_devices_disk_type_device("test", "floppt") 
+
+    def test_set_os_variant(self):
+        LibvirtXML.set_os_variant('x86_64', "network")
+        assert "x86_64" == LibvirtXML.domain_os_type.get("arch")
+        assert "network" == LibvirtXML.domain_os_boot.get("dev")         
