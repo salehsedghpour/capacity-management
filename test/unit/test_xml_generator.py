@@ -92,4 +92,8 @@ class TestLibvirtXMLGenerator(object):
     def test_set_os_variant(self):
         LibvirtXML.set_os_variant('x86_64', "network")
         assert "x86_64" == LibvirtXML.domain_os_type.get("arch")
-        assert "network" == LibvirtXML.domain_os_boot.get("dev")         
+        assert "network" == LibvirtXML.domain_os_boot.get("dev") 
+
+    def test_set_os_variant_with_wrong_unit(self):
+        with pytest.raises(exceptions.InvalidBootDevType):
+            LibvirtXML.set_os_variant("x86_64", "test")              
