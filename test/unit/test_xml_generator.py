@@ -8,8 +8,8 @@ LibvirtXML = LibvirtXMLGenerator()
 
 
 class TestLibvirtXMLGenerator(object):
-    def test_set_domain_type(self):
-        LibvirtXML.set_domain_type("kvm")
+    def test_set_domain_type_kvm(self):
+        LibvirtXML.set_domain_type_kvm()
         assert "kvm" == LibvirtXML.domain.get("type")
 
     def test_set_domain_type_error(self):
