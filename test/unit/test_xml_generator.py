@@ -12,10 +12,6 @@ class TestLibvirtXMLGenerator(object):
         LibvirtXML.set_domain_type_kvm()
         assert "kvm" == LibvirtXML.domain.get("type")
 
-    def test_set_domain_type_error(self):
-        with pytest.raises(exceptions.InvalidDomainType):
-            LibvirtXML.set_domain_type("test")
-
     def test_set_domain_ID(self):
         LibvirtXML.set_domain_ID("2")
         assert "2" == LibvirtXML.domain.get("id")
