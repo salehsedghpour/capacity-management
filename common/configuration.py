@@ -75,12 +75,9 @@ class LibvirtXMLGenerator():
         else:
             self.vm_xml = None
 
-    def set_domain_type(self, domain_type):
+    def set_domain_type_kvm(self):
         """Set domain type"""
-        if domain_type in ["kvm"]:
-            self.domain.set("type", domain_type)
-        else:
-            raise exceptions.InvalidDomainType
+        self.domain.set("type", "kvm")
 
     def set_domain_ID(self, domain_id):
         """Set domain ID
