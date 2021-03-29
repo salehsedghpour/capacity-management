@@ -95,6 +95,8 @@ class LibvirtXMLGenerator():
         :rtype: object
         :param domain_name:
         """
+        assert(domain_name != "")
+
         if domain_name != "":
             self.domain_name.text = domain_name
         else:
