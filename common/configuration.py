@@ -124,20 +124,17 @@ class LibvirtXMLGenerator():
         except ValueError:
             raise ValueError("Value error on VCPU Number")
 
-    #TODO Validation on CPU Set
-    def set_domain_vcpu_placement(self, vcpu_placement, cpuset=None):
-        """Set the placement of VCPUs
-        :rtype: object
-        :param vcpu_placement:
+    def set_domain_vcpu_static_placement(self, cpuset):
+        """Set static placement for VCPUs
         :param cpuset:
         """
-        if vcpu_placement == "static":
-            self.domain_vcpu.set("placement", vcpu_placement)
-            self.domain_vcpu.set("cpuset", cpuset)
-        elif vcpu_placement == "auto":
-            self.domain_vcpu.set("placement", vcpu_placement)
-        else:
-            raise exceptions.InvalidVCPUPlacement
+        self.domain_vcpu.set("placement", "static")
+        self.domain_vcpu.set("cpuset", cpuset)
+
+    def set_domain_vcpu_auto_placement(self):
+        """Set auto placement for VCPUs
+        """
+        self.domain_vcpu.set("placement", "auto")
 
     def set_domain_devices_disk_type_device(self, disk_type, disk_device):
         """ Set the disk type and disk device of a device in a domain"""
