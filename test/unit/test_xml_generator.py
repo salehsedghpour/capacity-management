@@ -53,10 +53,6 @@ class TestLibvirtXMLGenerator(object):
         LibvirtXML.set_domain_vcpu_static_placement("1")
         assert "1" == LibvirtXML.domain_vcpu.get("cpuset")
 
-    def test_set_domain_vcpu_placement_with_wrnong_placement(self):
-        with pytest.raises(exceptions.InvalidVCPUPlacement):
-            LibvirtXML.set_domain_vcpu_placement("test")
-
     def test_set_graphics(self):
         LibvirtXML.set_graphics("sdl",'-1', "yes")
         assert "sdl" == LibvirtXML.domain_devices_graphics.get("graphics_type")
