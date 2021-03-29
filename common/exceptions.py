@@ -10,9 +10,6 @@ class InvalidMemoryUnit(Exception):
     pass
 
 
-class InvalidVCPUPlacement(Exception):
-    pass
-
 class InvalidDiskType(Exception):
     pass
     
