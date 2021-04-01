@@ -122,6 +122,8 @@ class LibvirtXMLGenerator():
         :param vcpu_number: 
         """
         try:
+            assert(int(vcpu_number))
+
             self.domain_vcpu.text = str(int(vcpu_number))
         except ValueError:
             raise ValueError("Value error on VCPU Number")
