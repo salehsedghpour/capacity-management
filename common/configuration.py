@@ -85,6 +85,8 @@ class LibvirtXMLGenerator():
         :param domain_id: 
         """
         try:
+            assert(int(domain_id))
+
             int_domain_id = int(domain_id)
             self.domain.set("id", str(int_domain_id))
         except ValueError:
