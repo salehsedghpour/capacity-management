@@ -141,7 +141,11 @@ class LibvirtXMLGenerator():
             raise exceptions.InvalidVCPUPlacement
 
     def set_domain_devices_disk_type_device(self, disk_type, disk_device):
-        """ Set the disk type and disk device of a device in a domain"""
+        """ Set disk type, disk device in domain
+        rtype: object
+        param disk_type:
+        param disk device:"""
+
         disk_types = ["file", "block", "dir", "network", "volume", "nvme", "vhostuser"]
         disk_devices = ["floppy", "disk", "cdrom", "lun"]
         if disk_type in disk_types:
@@ -157,12 +161,14 @@ class LibvirtXMLGenerator():
     def set_graphics(self, graphics_type, port_number, autoport):
         """Set Graphic Device"""
         graphics_types = ['sdl',' vnc', 'spice', 'rdp', ' desktop',' egl-headless']
+
         assert(graphics_type != "")
+
         if graphics_type in graphics_types:
-            if autoport in ['yes', 'no']:
+            if autoport != 'no':
                 self.domain_devices_graphics.set("graphics_type", graphics_type)              
                 
-                self.domain_devices_graphics.set("autoport", autoport)                
+                self.domain_devices_graphics.set("autoport", 'no')                
             else:
                 raise exceptions.InvalidAutoPort
         else:   
@@ -175,11 +181,16 @@ class LibvirtXMLGenerator():
         except ValueError:
             raise ValueError("Port number Value Error") 
     
-
+    def set_graphics_autoport(self):
+        """Set autoport for graphics
+        """
+        self.domain_devices_graphics.set("autoport", "yes") 
 
     def set_os_variant(self, arch, dev):
         """ set os type    """
+
         devs = ["fd", "hd", "cdrom", "network"]
+
         assert(arch != "")
         if arch != "":
          
