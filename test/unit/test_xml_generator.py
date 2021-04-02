@@ -8,13 +8,9 @@ LibvirtXML = LibvirtXMLGenerator()
 
 
 class TestLibvirtXMLGenerator(object):
-    def test_set_domain_type(self):
-        LibvirtXML.set_domain_type("kvm")
+    def test_set_domain_type_kvm(self):
+        LibvirtXML.set_domain_type_kvm()
         assert "kvm" == LibvirtXML.domain.get("type")
-
-    def test_set_domain_type_error(self):
-        with pytest.raises(exceptions.InvalidDomainType):
-            LibvirtXML.set_domain_type("test")
 
     def test_set_domain_ID(self):
         LibvirtXML.set_domain_ID("2")
@@ -49,17 +45,13 @@ class TestLibvirtXMLGenerator(object):
         with pytest.raises(ValueError):
             LibvirtXML.set_domain_vcpu("test")
 
-    def test_set_domain_vcpu_placement(self):
-        LibvirtXML.set_domain_vcpu_placement("auto")
+    def test_set_domain_vcpu_auto_placement(self):
+        LibvirtXML.set_domain_vcpu_auto_placement()
         assert "auto" == LibvirtXML.domain_vcpu.get("placement")
 
-    def test_set_domain_vcpu_placement_cpuset(self):
-        LibvirtXML.set_domain_vcpu_placement("static", "1")
+    def test_set_domain_vcpu_static_placement(self):
+        LibvirtXML.set_domain_vcpu_static_placement("1")
         assert "1" == LibvirtXML.domain_vcpu.get("cpuset")
-
-    def test_set_domain_vcpu_placement_with_wrnong_placement(self):
-        with pytest.raises(exceptions.InvalidVCPUPlacement):
-            LibvirtXML.set_domain_vcpu_placement("test")
 
     def test_set_graphics(self):
         LibvirtXML.set_graphics("sdl",'-1', "yes")

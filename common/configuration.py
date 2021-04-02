@@ -75,12 +75,9 @@ class LibvirtXMLGenerator():
         else:
             self.vm_xml = None
 
-    def set_domain_type(self, domain_type):
+    def set_domain_type_kvm(self):
         """Set domain type"""
-        if domain_type in ["kvm"]:
-            self.domain.set("type", domain_type)
-        else:
-            raise exceptions.InvalidDomainType
+        self.domain.set("type", "kvm")
 
     def set_domain_ID(self, domain_id):
         """Set domain ID
@@ -88,6 +85,8 @@ class LibvirtXMLGenerator():
         :param domain_id: 
         """
         try:
+            assert(int(domain_id))
+
             int_domain_id = int(domain_id)
             self.domain.set("id", str(int_domain_id))
         except ValueError:
@@ -98,6 +97,8 @@ class LibvirtXMLGenerator():
         :rtype: object
         :param domain_name:
         """
+        assert(domain_name != "")
+
         if domain_name != "":
             self.domain_name.text = domain_name
         else:
@@ -121,24 +122,23 @@ class LibvirtXMLGenerator():
         :param vcpu_number: 
         """
         try:
+            assert(int(vcpu_number))
+
             self.domain_vcpu.text = str(int(vcpu_number))
         except ValueError:
             raise ValueError("Value error on VCPU Number")
 
-    #TODO Validation on CPU Set
-    def set_domain_vcpu_placement(self, vcpu_placement, cpuset=None):
-        """Set the placement of VCPUs
-        :rtype: object
-        :param vcpu_placement:
+    def set_domain_vcpu_static_placement(self, cpuset):
+        """Set static placement for VCPUs
         :param cpuset:
         """
-        if vcpu_placement == "static":
-            self.domain_vcpu.set("placement", vcpu_placement)
-            self.domain_vcpu.set("cpuset", cpuset)
-        elif vcpu_placement == "auto":
-            self.domain_vcpu.set("placement", vcpu_placement)
-        else:
-            raise exceptions.InvalidVCPUPlacement
+        self.domain_vcpu.set("placement", "static")
+        self.domain_vcpu.set("cpuset", cpuset)
+
+    def set_domain_vcpu_auto_placement(self):
+        """Set auto placement for VCPUs
+        """
+        self.domain_vcpu.set("placement", "auto")
 
     def set_domain_devices_disk_type_device(self, disk_type, disk_device):
         """ Set the disk type and disk device of a device in a domain"""
