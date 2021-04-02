@@ -160,14 +160,19 @@ class LibvirtXMLGenerator():
         assert(graphics_type != "")
         if graphics_type in graphics_types:
             if autoport in ['yes', 'no']:
-                self.domain_devices_graphics.set("graphics_type", graphics_type)
+                self.domain_devices_graphics.set("graphics_type", graphics_type)              
                 
-                self.domain_devices_graphics.set("port", port_number)
                 self.domain_devices_graphics.set("autoport", autoport)                
             else:
                 raise exceptions.InvalidAutoPort
         else:   
-            raise exceptions.InvalidGraphicsType  
+            raise exceptions.InvalidGraphicsType
+
+        try:
+            assert(int(port_number))
+
+            self.domain_devices_graphics.set("port", int(port_number))
+        
     
 
 
