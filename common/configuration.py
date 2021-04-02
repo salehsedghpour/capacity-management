@@ -169,7 +169,10 @@ class LibvirtXMLGenerator():
 
     def set_os_variant(self, arch, dev):
         """ set os type    """
+        
+        assert(arch != "")
         if arch != "":
+         
             self.domain_os_type.set('arch',arch)
                    
         self.domain_os_type.text = 'hvm'
