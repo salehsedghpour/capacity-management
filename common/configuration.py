@@ -172,7 +172,7 @@ class LibvirtXMLGenerator():
 
     def set_os_variant(self, arch, dev):
         """ set os type    """
-
+        devs = ["fd", "hd", "cdrom", "network"]
         assert(arch != "")
         if arch != "":
          
@@ -183,7 +183,7 @@ class LibvirtXMLGenerator():
         self.domain_os_type.text = 'hvm'
 
         assert(dev != "")
-        if dev in ["fd", "hd", "cdrom", "network"]:
+        if dev in devs:
            self.domain_os_boot.set('dev', dev)
         else:
             raise exceptions.InvalidBootDevType
