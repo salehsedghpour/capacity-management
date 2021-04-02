@@ -143,8 +143,9 @@ class LibvirtXMLGenerator():
     def set_domain_devices_disk_type_device(self, disk_type, disk_device):
         """ Set the disk type and disk device of a device in a domain"""
         disk_types = ["file", "block", "dir", "network", "volume", "nvme", "vhostuser"]
+        disk_devices = ["floppy", "disk", "cdrom", "lun"]
         if disk_type in disk_types:
-            if disk_device in ["floppy", "disk", "cdrom", "lun"]:
+            if disk_device in disk_devices:
                 self.domain_devices_disk.set("type", disk_type)
                 self.domain_devices_disk.set("device", disk_device)
             else:
