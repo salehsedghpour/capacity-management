@@ -176,9 +176,10 @@ class LibvirtXMLGenerator():
             self.domain_os_type.set('arch',arch)
         else: 
             raise exceptions.EmptyString   
-                   
-        self.domain_os_type.text = 'hvm'
         
+        self.domain_os_type.text = 'hvm'
+
+        assert(dev != "")
         if dev in ["fd", "hd", "cdrom", "network"]:
            self.domain_os_boot.set('dev', dev)
         else:
