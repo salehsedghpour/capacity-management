@@ -172,7 +172,8 @@ class LibvirtXMLGenerator():
             assert(int(port_number))
 
             self.domain_devices_graphics.set("port", int(port_number))
-        
+        except ValueError:
+            raise ValueError("Port number Value Error") 
     
 
 
