@@ -141,9 +141,16 @@ class LibvirtXMLGenerator():
         self.domain_vcpu.set("placement", "auto")
 
     def set_domain_devices_disk_type_device(self, disk_type, disk_device):
-        """ Set the disk type and disk device of a device in a domain"""
-        if disk_type in ["file", "block", "dir", "network", "volume", "nvme", "vhostuser"]:
-            if disk_device in ["floppy", "disk", "cdrom", "lun"]:
+        """ Set disk type, disk device in domain
+        rtype: object
+        param disk_type:
+        param disk device:"""
+
+        disk_types = ["file", "block", "dir", "network", "volume", "nvme", "vhostuser"]
+        disk_devices = ["floppy", "disk", "cdrom", "lun"]
+
+        if disk_type in disk_types:
+            if disk_device in disk_devices:
                 self.domain_devices_disk.set("type", disk_type)
                 self.domain_devices_disk.set("device", disk_device)
             else:
@@ -152,29 +159,50 @@ class LibvirtXMLGenerator():
             raise exceptions.InvalidDiskType       
 
 
-    def set_graphics(self, graphics_type, port, autoport):
+    def set_graphics(self, graphics_type, port_number, autoport):
         """Set Graphic Device"""
+        graphics_types = ['sdl',' vnc', 'spice', 'rdp', ' desktop',' egl-headless']
 
-        if graphics_type in ['sdl',' vnc', 'spice', 'rdp', ' desktop',' egl-headless']:
-            if autoport in ['yes', 'no']:
-                self.domain_devices_graphics.set("graphics_type", graphics_type)
-                self.domain_devices_graphics.set("port", port)
-                self.domain_devices_graphics.set("autoport", autoport)                
+        assert(graphics_type != "")
+
+        if graphics_type in graphics_types:
+            if autoport == 'no':
+                self.domain_devices_graphics.set("graphics_type", graphics_type)              
+                
+                self.domain_devices_graphics.set("autoport", 'no')                
             else:
                 raise exceptions.InvalidAutoPort
         else:   
-            raise exceptions.InvalidGraphicsType  
-    
+            raise exceptions.InvalidGraphicsType
 
+        try:
+            assert(int(port_number))
+
+            self.domain_devices_graphics.set("port", int(port_number))
+        except ValueError:
+            raise ValueError("Port number Value Error") 
+    
+    def set_graphics_autoport(self):
+        """Set autoport for graphics
+        """
+        self.domain_devices_graphics.set("autoport", "yes") 
 
     def set_os_variant(self, arch, dev):
         """ set os type    """
-        if arch != "":
+
+        devs = ["fd", "hd", "cdrom", "network"]
+
+        assert(arch != "")
+
+        if arch != "":         
             self.domain_os_type.set('arch',arch)
-                   
-        self.domain_os_type.text = 'hvm'
+        else: 
+            raise exceptions.EmptyString   
         
-        if dev in ["fd", "hd", "cdrom", "network"]:
+        self.domain_os_type.text = 'hvm'
+
+        assert(dev != "")
+        if dev in devs:
            self.domain_os_boot.set('dev', dev)
         else:
             raise exceptions.InvalidBootDevType
