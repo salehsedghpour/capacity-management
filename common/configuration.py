@@ -154,9 +154,9 @@ class LibvirtXMLGenerator():
 
     def set_graphics(self, graphics_type, port, autoport):
         """Set Graphic Device"""
-        
+        graphics_types = ['sdl',' vnc', 'spice', 'rdp', ' desktop',' egl-headless']
         assert(graphics_type != "")
-        if graphics_type in ['sdl',' vnc', 'spice', 'rdp', ' desktop',' egl-headless']:
+        if graphics_type in graphics_types:
             if autoport in ['yes', 'no']:
                 self.domain_devices_graphics.set("graphics_type", graphics_type)
                 self.domain_devices_graphics.set("port", port)
