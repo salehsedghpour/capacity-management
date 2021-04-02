@@ -154,14 +154,15 @@ class LibvirtXMLGenerator():
             raise exceptions.InvalidDiskType       
 
 
-    def set_graphics(self, graphics_type, port, autoport):
+    def set_graphics(self, graphics_type, port_number, autoport):
         """Set Graphic Device"""
         graphics_types = ['sdl',' vnc', 'spice', 'rdp', ' desktop',' egl-headless']
         assert(graphics_type != "")
         if graphics_type in graphics_types:
             if autoport in ['yes', 'no']:
                 self.domain_devices_graphics.set("graphics_type", graphics_type)
-                self.domain_devices_graphics.set("port", port)
+                
+                self.domain_devices_graphics.set("port", port_number)
                 self.domain_devices_graphics.set("autoport", autoport)                
             else:
                 raise exceptions.InvalidAutoPort
