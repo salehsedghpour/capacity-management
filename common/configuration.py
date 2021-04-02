@@ -148,6 +148,7 @@ class LibvirtXMLGenerator():
 
         disk_types = ["file", "block", "dir", "network", "volume", "nvme", "vhostuser"]
         disk_devices = ["floppy", "disk", "cdrom", "lun"]
+
         if disk_type in disk_types:
             if disk_device in disk_devices:
                 self.domain_devices_disk.set("type", disk_type)
@@ -165,7 +166,7 @@ class LibvirtXMLGenerator():
         assert(graphics_type != "")
 
         if graphics_type in graphics_types:
-            if autoport != 'no':
+            if autoport == 'no':
                 self.domain_devices_graphics.set("graphics_type", graphics_type)              
                 
                 self.domain_devices_graphics.set("autoport", 'no')                
@@ -192,8 +193,8 @@ class LibvirtXMLGenerator():
         devs = ["fd", "hd", "cdrom", "network"]
 
         assert(arch != "")
-        if arch != "":
-         
+
+        if arch != "":         
             self.domain_os_type.set('arch',arch)
         else: 
             raise exceptions.EmptyString   
